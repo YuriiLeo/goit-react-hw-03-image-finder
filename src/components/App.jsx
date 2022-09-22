@@ -1,3 +1,4 @@
+import Searchbar from "./01_Searchbar/Searchbar";
 export const App = () => {
   return (
     <div
@@ -11,6 +12,7 @@ export const App = () => {
       }}
     >
       React homework template
+      <Searchbar/>
     </div>
   );
 };
