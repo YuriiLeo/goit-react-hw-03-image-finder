@@ -6,7 +6,7 @@ const URL = "https://pixabay.com/api";
 const instance = axios.create({
     baseURL: URL,
     params: {
-        per_page: 4,
+        per_page: 12,
         key: KEY,
         image_type: "photo",
         orientation: "horizontal",

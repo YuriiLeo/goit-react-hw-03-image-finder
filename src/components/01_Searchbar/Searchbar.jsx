@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { SearchbarHeader, SearchForm, Button, Label, Input, } from './Searchbar.styled';
-import { AiOutlineSearch } from "react-icons/ai";
+import { MdOutlineImageSearch } from "react-icons/md";
 // import { toast } from 'react-toastify'; 
 
 export default class Searchbar extends Component {
@@ -49,7 +49,7 @@ export default class Searchbar extends Component {
       <SearchbarHeader>
        <SearchForm onSubmit={handleSubmit}>
           <Button type="submit" onClick={handleSubmit}>
-            <AiOutlineSearch size={20}/>
+            <MdOutlineImageSearch size={40}/>
            <Label>Search</Label>
           </Button>
           

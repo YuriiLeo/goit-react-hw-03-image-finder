@@ -47,7 +47,6 @@ export default class App extends Component {
       
       try {
         const data = await searchPixabayAPI(search, page);
-        console.log(data.hits.length);
         if (data.hits.length === 0) {
           this.setState(({ notFound }) => {
             return {
