@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { SearchbarHeader, SearchForm, Button, Label, Input, } from './Searchbar.styled';
 import { MdOutlineImageSearch } from "react-icons/md";
-// import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify'; 
 
 export default class Searchbar extends Component {
   
@@ -18,16 +18,15 @@ export default class Searchbar extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.search.trim() === "") {
-      // toast.warn('Поле пошуку пусте', {
-      //   position: "top-center",
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      // });
-      alert("Поле пошуку пусте");
+      toast.warn('The search field is empty', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     this.props.onSearch(this.state.search.trim());
