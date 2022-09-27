@@ -4,6 +4,7 @@ import {Loader} from 'components/04_Loader/Loader';
 import { searchPixabayAPI } from 'components/services/ApiPixabay';
 import { AppWrapper } from "./App.styled";
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Button from "components/05_Button/Button";
 import Modal from "components/06_Modal/Modal";
 import Warnings from "components/07_Warnings/Warnings";
@@ -11,10 +12,10 @@ import Warnings from "components/07_Warnings/Warnings";
 import React, { Component } from 'react'
 
 export default class App extends Component {
-// список постів items
-  
+
     state = {
       images: [],
+      totalImages: 0,
       bigImagePath: "",
       isLoading: false,
       error: null,
@@ -36,6 +37,7 @@ export default class App extends Component {
       this.setState({
       images: [],
       search,
+      page: 1,
     })
   }
 
@@ -47,6 +49,7 @@ export default class App extends Component {
       
       try {
         const data = await searchPixabayAPI(search, page);
+        console.log(data);
         if (data.hits.length === 0) {
           this.setState(({ notFound }) => {
             return {
@@ -54,10 +57,11 @@ export default class App extends Component {
             }
           })
         } else {
-          this.setState(({ images, notFound }) => {
+          this.setState(({ images, notFound, totalImages }) => {
             return {
               images: [...images, ...data.hits],
-              notFound: false
+              notFound: false,
+              totalImages: data.totalHits,
             }
           })
         }
@@ -93,13 +97,15 @@ export default class App extends Component {
 
   
   render() {
-    const { images, isLoading, error, bigImagePath, notFound } = this.state;
+    const { images, isLoading, error, bigImagePath, notFound, totalImages } = this.state;
     const { loadMore, onSearch, toggleModal } = this;
     const isImages = Boolean(images.length);
+    console.log("ImL", images.length);
+    console.log("TI", totalImages);
     return (
           <AppWrapper>
         <Searchbar onSearch={onSearch} />
-        <ToastContainer />
+        <ToastContainer position="top-right" autoClose={5000} />
         {notFound && <Warnings text="Nothing found for this query, try again"/>}
         {bigImagePath && (<Modal onClick={toggleModal} path={bigImagePath}>
           <img src={bigImagePath} alt="" />
@@ -108,7 +114,7 @@ export default class App extends Component {
         {error && <Warnings text="Please, try again later"/>}
         {!isImages && !notFound && <Warnings text="Enter key word for images search"/>}
         {isImages && <ImageGallery items={images} toggleModal={toggleModal} />}
-        {isImages && <Button loadMore={loadMore} />}
+        {(isImages && images.length < totalImages) && <Button loadMore={loadMore} />}
     </AppWrapper>
     )
   }
